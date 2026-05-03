@@ -6,13 +6,17 @@ import (
 )
 
 func main() {
+	inflationRate := 2.5
 
 	// This all type float.
 	invesmentAmount := 1000.0
 	expectedReturnRate := 5.5
 	years := 10.0
 
-	var future = invesmentAmount * math.Pow((1+expectedReturnRate/100), years)
-	fmt.Println(future)
+	var futureValue = invesmentAmount * math.Pow((1+expectedReturnRate/100), years)
+	futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
+
+	fmt.Println(invesmentAmount)
+	fmt.Println(futureRealValue)
 
 }
