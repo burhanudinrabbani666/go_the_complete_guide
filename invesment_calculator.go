@@ -1,6 +1,3 @@
-# Variables values operators
-
-```go
 package main
 
 func main() {
@@ -12,6 +9,3 @@ func main() {
 	var future int = invesmentAmount * (1 + int(expectedReturnRate)/100)
 
 }
-```
-
-Next: [Understanding value types](./08-understanding-value-types.md)
