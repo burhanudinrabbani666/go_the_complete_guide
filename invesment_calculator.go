@@ -1,11 +1,18 @@
 package main
 
+import (
+	"fmt"
+	"math"
+)
+
 func main() {
 
-	var invesmentAmount int = 1000
-	var expectedReturnRate float32 = 5.5
-	var years int8 = 10
+	// This all type float.
+	invesmentAmount := 1000.0
+	expectedReturnRate := 5.5
+	years := 10.0
 
-	var future int = invesmentAmount * (1 + int(expectedReturnRate)/100)
+	var future = invesmentAmount * math.Pow((1+expectedReturnRate/100), years)
+	fmt.Println(future)
 
 }
