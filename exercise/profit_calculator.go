@@ -1,6 +1,11 @@
-# Profit calculator solution
+package main
 
-```go
+import (
+	"fmt"
+	"os"
+	"os/exec"
+)
+
 func main() {
 	var revenue float64
 	var expenses float64
@@ -28,6 +33,3 @@ func main() {
 	fmt.Printf("Profit: %f \n", profit)
 	fmt.Printf("EBT: %f \n", ratio)
 }
-```
-
-Next: [Formatting strings basics](./19-formatting-strings-basics.md)
