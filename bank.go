@@ -9,35 +9,35 @@ import (
 
 var ACCOUNT_BALANCE_FILE string = "balance.txt"
 
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
+func writeValueToFile(value float64, fileName string) {
+	balanceText := fmt.Sprint(value)
+	err := os.WriteFile(fileName, []byte(balanceText), 0666)
 
-	err := os.WriteFile(ACCOUNT_BALANCE_FILE, []byte(balanceText), 0666)
 	if err != nil {
 		panic(err)
 	}
 
 }
 
-func getBelanceFromFile() (float64, error) {
-	bytes, err := os.ReadFile(ACCOUNT_BALANCE_FILE)
+func getFloatFromFile(fileName string) (float64, error) {
+	bytes, err := os.ReadFile(fileName)
 
 	if err != nil {
-		return 1000, errors.New("Failed to get Balanced.")
+		return 1000, errors.New("Failed to Find file.")
 	}
 
-	balanceText := string(bytes)
-	balance, err := strconv.ParseFloat(balanceText, 64)
+	valueText := string(bytes)
+	value, err := strconv.ParseFloat(valueText, 64)
 
 	if err != nil {
-		return 1000, errors.New("Failed to Parse Data.")
+		return 1000, errors.New("Failed to Parse Storage Value.")
 	}
 
-	return balance, nil
+	return value, nil
 }
 
 func main() {
-	accountBalance, err := getBelanceFromFile()
+	accountBalance, err := getFloatFromFile(ACCOUNT_BALANCE_FILE)
 
 	if err != nil {
 		fmt.Println("ERROR")
@@ -76,7 +76,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Printf("Balance Update! new Amount: %.2f\n", accountBalance)
-			writeBalanceToFile(accountBalance)
+			writeValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
 
 		case 3:
 			fmt.Print("Withdrawal Amount: ")
@@ -96,7 +96,7 @@ func main() {
 
 			accountBalance -= withdrawalAmount
 			fmt.Printf("Balance Update! new Amount: %.2f\n", accountBalance)
-			writeBalanceToFile(accountBalance)
+			writeValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
 
 		default:
 			fmt.Println("Goodbye!")
