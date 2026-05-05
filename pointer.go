@@ -1,6 +1,7 @@
-# pointers data mutation
+package main
 
-```go
+import "fmt"
+
 func main() {
 	age := 32 // Reguler Variable
 
@@ -15,6 +16,3 @@ func main() {
 func calculateAge(age *int) {
 	*age -= 18
 }
-```
-
-Next: [scan function pointers](./08-scan-function-pointers.md)
