@@ -1,46 +1,58 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 )
 
 type CompanyData struct {
-	revenue  float64
-	expenses float64
-	taxRate  float64
+	Revenue  float64
+	Expenses float64
+	TaxRate  float64
 }
 
 type ResultCalculateFinancial struct {
-	ebt    float64
-	profit float64
-	ratio  float64
+	Ebt    float64
+	Profit float64
+	Ratio  float64
 }
 
 func main() {
 	CompanyData := CompanyData{}
 
-	CompanyData.revenue = getUserInput("Revenue: ")
-	CompanyData.expenses = getUserInput("Expense: ")
-	CompanyData.taxRate = getUserInput("Tax Rate: ")
+	CompanyData.Revenue = getUserInput("Revenue: ")
+	CompanyData.Expenses = getUserInput("Expense: ")
+	CompanyData.TaxRate = getUserInput("Tax Rate: ")
 
 	fmt.Print("\n")
 
-	ResultCalculateFinancial := calculateFinancial(CompanyData)
-	fmt.Printf("EBT: %.2f\n", ResultCalculateFinancial.ebt)
-	fmt.Printf("Profit: %.2f\n", ResultCalculateFinancial.profit)
-	fmt.Printf("Ratio: %.2f\n", ResultCalculateFinancial.ratio)
+	result := calculateFinancial(CompanyData)
+	fmt.Printf("EBT: %.2f\n", result.Ebt)
+	fmt.Printf("Profit: %.2f\n", result.Profit)
+	fmt.Printf("Ratio: %.2f\n", result.Ratio)
+
+	bytes, _ := json.Marshal(result)
+	resultString := string(bytes)
+
+	os.WriteFile("resultCalculateFinancial.json", []byte(resultString), 0666)
 }
 
 func getUserInput(question string) (userInput float64) {
 	fmt.Print(question)
 	fmt.Scan(&userInput)
+
+	if userInput <= 0 {
+		panic("Input Not Valid. input should be number and positive")
+	}
+
 	return userInput
 }
 
 func calculateFinancial(data CompanyData) (ResultCalculateFinancial ResultCalculateFinancial) {
-	ResultCalculateFinancial.ebt = data.revenue - data.expenses
-	ResultCalculateFinancial.profit = ResultCalculateFinancial.ebt * (1 - (data.taxRate / 100))
-	ResultCalculateFinancial.ratio = ResultCalculateFinancial.ebt / ResultCalculateFinancial.profit
+	ResultCalculateFinancial.Ebt = data.Revenue - data.Expenses
+	ResultCalculateFinancial.Profit = ResultCalculateFinancial.Ebt * (1 - (data.TaxRate / 100))
+	ResultCalculateFinancial.Ratio = ResultCalculateFinancial.Ebt / ResultCalculateFinancial.Profit
 
 	return ResultCalculateFinancial
 }
