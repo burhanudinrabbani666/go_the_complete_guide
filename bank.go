@@ -1,6 +1,7 @@
-# Control structures
+package main
 
-```go
+import "fmt"
+
 func main() {
 	fmt.Println("Welcome GO Bank")
 	fmt.Println("What do you want to do?")
@@ -15,6 +16,3 @@ func main() {
 
 	fmt.Printf("Your Choice: %d\n", userChoice)
 }
-```
-
-Next: [if statements booleans](./28-if-statements-booleans.md)
