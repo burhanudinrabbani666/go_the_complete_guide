@@ -12,6 +12,14 @@ type User struct {
 	CreatedAt time.Time
 }
 
+func (user User) outputUserDetail() {
+
+	fmt.Printf("First Name: %s\n", user.FirstName)
+	fmt.Printf("Last Name: %s\n", user.LastName)
+	fmt.Printf("Birthdate: %s\n", user.Birthdate)
+	fmt.Printf("Created At: %s\n", user.CreatedAt)
+}
+
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
@@ -24,18 +32,7 @@ func main() {
 		CreatedAt: time.Now(),
 	}
 
-	outputUserDetail(&user)
-}
-
-func outputUserDetail(user *User) {
-
-	// Why in this dont need *?
-	// because is shortcuted by Golang
-	// so that dont need *user.
-	fmt.Println("First Name: ", user.FirstName)
-	fmt.Println("Last Name: ", user.LastName)
-	fmt.Println("Birthdate: ", user.Birthdate)
-	fmt.Println("Created At: ", user.CreatedAt)
+	user.outputUserDetail()
 }
 
 func getUserData(promptText string) string {
@@ -43,8 +40,4 @@ func getUserData(promptText string) string {
 	var value string
 	fmt.Scan(&value)
 	return value
-}
-
-func (user User) getName() {
-	fmt.Println(user.FirstName)
 }
