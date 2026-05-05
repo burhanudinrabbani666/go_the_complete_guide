@@ -1,43 +1,16 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+	filesops "go_the_complete_guide/bank/files_ops"
+
+	"github.com/brianvoe/gofakeit"
 )
 
 var ACCOUNT_BALANCE_FILE string = "balance.txt"
 
-func writeValueToFile(value float64, fileName string) {
-	balanceText := fmt.Sprint(value)
-	err := os.WriteFile(fileName, []byte(balanceText), 0666)
-
-	if err != nil {
-		panic(err)
-	}
-
-}
-
-func getFloatFromFile(fileName string) (float64, error) {
-	bytes, err := os.ReadFile(fileName)
-
-	if err != nil {
-		return 1000, errors.New("Failed to Find file.")
-	}
-
-	valueText := string(bytes)
-	value, err := strconv.ParseFloat(valueText, 64)
-
-	if err != nil {
-		return 1000, errors.New("Failed to Parse Storage Value.")
-	}
-
-	return value, nil
-}
-
 func main() {
-	accountBalance, err := getFloatFromFile(ACCOUNT_BALANCE_FILE)
+	accountBalance, err := filesops.GetFloatFromFile(ACCOUNT_BALANCE_FILE)
 
 	if err != nil {
 		fmt.Println("ERROR")
@@ -48,6 +21,7 @@ func main() {
 	}
 
 	fmt.Println("Welcome GO Bank")
+	fmt.Printf("Reach us 24/7 at %s\n", gofakeit.Phone())
 
 	// Infinite Loops
 	for {
@@ -76,7 +50,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Printf("Balance Update! new Amount: %.2f\n", accountBalance)
-			writeValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
+			filesops.WriteValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
 
 		case 3:
 			fmt.Print("Withdrawal Amount: ")
@@ -96,7 +70,7 @@ func main() {
 
 			accountBalance -= withdrawalAmount
 			fmt.Printf("Balance Update! new Amount: %.2f\n", accountBalance)
-			writeValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
+			filesops.WriteValueToFile(accountBalance, ACCOUNT_BALANCE_FILE)
 
 		default:
 			fmt.Println("Goodbye!")
