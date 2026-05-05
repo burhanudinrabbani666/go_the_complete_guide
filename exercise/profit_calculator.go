@@ -2,34 +2,45 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
 )
 
+type CompanyData struct {
+	revenue  float64
+	expenses float64
+	taxRate  float64
+}
+
+type ResultCalculateFinancial struct {
+	ebt    float64
+	profit float64
+	ratio  float64
+}
+
 func main() {
-	var revenue float64
-	var expenses float64
-	var taxRate float64
+	CompanyData := CompanyData{}
 
-	fmt.Print("Revenue: ")
-	fmt.Scan(&revenue)
+	CompanyData.revenue = getUserInput("Revenue: ")
+	CompanyData.expenses = getUserInput("Expense: ")
+	CompanyData.taxRate = getUserInput("Tax Rate: ")
 
-	fmt.Print("Expenses: ")
-	fmt.Scan(&expenses)
+	fmt.Print("\n")
 
-	fmt.Print("Tax Rate: ")
-	fmt.Scan(&taxRate)
+	ResultCalculateFinancial := calculateFinancial(CompanyData)
+	fmt.Printf("EBT: %.2f\n", ResultCalculateFinancial.ebt)
+	fmt.Printf("Profit: %.2f\n", ResultCalculateFinancial.profit)
+	fmt.Printf("Ratio: %.2f\n", ResultCalculateFinancial.ratio)
+}
 
-	ebt := revenue - expenses
-	profit := ebt * (1 - (taxRate / 100))
-	ratio := ebt / profit
+func getUserInput(question string) (userInput float64) {
+	fmt.Print(question)
+	fmt.Scan(&userInput)
+	return userInput
+}
 
-	// For Clearing terminal
-	execute := exec.Command("clear")
-	execute.Stdout = os.Stdout
-	execute.Run()
+func calculateFinancial(data CompanyData) (ResultCalculateFinancial ResultCalculateFinancial) {
+	ResultCalculateFinancial.ebt = data.revenue - data.expenses
+	ResultCalculateFinancial.profit = ResultCalculateFinancial.ebt * (1 - (data.taxRate / 100))
+	ResultCalculateFinancial.ratio = ResultCalculateFinancial.ebt / ResultCalculateFinancial.profit
 
-	fmt.Printf("EBT: %f \n", ebt)
-	fmt.Printf("Profit: %f \n", profit)
-	fmt.Printf("EBT: %f \n", ratio)
+	return ResultCalculateFinancial
 }
