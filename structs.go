@@ -24,11 +24,14 @@ func main() {
 		CreatedAt: time.Now(),
 	}
 
-	outputUserDetail(user)
+	outputUserDetail(&user)
 }
 
-func outputUserDetail(user User) {
+func outputUserDetail(user *User) {
 
+	// Why in this dont need *?
+	// because is shortcuted by Golang
+	// so that dont need *user.
 	fmt.Println("First Name: ", user.FirstName)
 	fmt.Println("Last Name: ", user.LastName)
 	fmt.Println("Birthdate: ", user.Birthdate)
@@ -40,4 +43,8 @@ func getUserData(promptText string) string {
 	var value string
 	fmt.Scan(&value)
 	return value
+}
+
+func (user User) getName() {
+	fmt.Println(user.FirstName)
 }
