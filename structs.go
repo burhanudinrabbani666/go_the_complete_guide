@@ -12,25 +12,35 @@ type User struct {
 	CreatedAt time.Time
 }
 
-func (user User) outputUserDetail() {
-
+func (user *User) outputUserDetail() {
 	fmt.Printf("First Name: %s\n", user.FirstName)
 	fmt.Printf("Last Name: %s\n", user.LastName)
 	fmt.Printf("Birthdate: %s\n", user.Birthdate)
 	fmt.Printf("Created At: %s\n", user.CreatedAt)
 }
 
-func main() {
-	userFirstName := getUserData("Please enter your first name: ")
-	userLastName := getUserData("Please enter your last name: ")
-	userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+func (user *User) clearUsername() {
 
-	user := User{
-		FirstName: userFirstName,
-		LastName:  userLastName,
-		Birthdate: userBirthdate,
+	user.FirstName = ""
+	user.LastName = ""
+}
+
+func NewUser(firstName, lastName, birthdate string) *User {
+	return &User{
+		FirstName: firstName,
+		LastName:  lastName,
+		Birthdate: birthdate,
 		CreatedAt: time.Now(),
 	}
+
+}
+
+func main() {
+	// userFirstName := getUserData("Please enter your first name: ")
+	// userLastName := getUserData("Please enter your last name: ")
+	// userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
+
+	user := NewUser("Burhanudin", "Rabbani", "11/14/2002")
 
 	user.outputUserDetail()
 }
