@@ -1,109 +1,13 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
-
-	"go_the_complete_guide/main/note"
-	"go_the_complete_guide/main/todo"
-)
-
-type Saver interface {
-	Save() error
-}
-
-type Outputable interface {
-	Saver
-	Display()
-}
+import "fmt"
 
 func main() {
-	printSomething(1)
-	printSomething(1.5)
-	printSomething("Hello")
-
-	title, description := getNoteData()
-	todoText := getUserInput("Todo text: ")
-
-	userTodo, todoError := todo.New(todoText)
-	if todoError != nil {
-		fmt.Println(todoError)
-		return
-	}
-
-	errTodoSave := outputData(userTodo)
-	if errTodoSave != nil {
-		return
-	}
-
-	userNote, err := note.New(title, description)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	errorSave := outputData(userNote)
-	if errorSave != nil {
-		return
-	}
-
+	result := add(1, 2.7)
+	fmt.Println(result)
 }
 
-func printSomething(value any) {
-	intVal, ok := value.(int)
-	if ok {
-		fmt.Println("Integer: ", intVal)
-	}
-
-	float64Val, ok := value.(float64)
-	if ok {
-		fmt.Println("Float: ", float64Val)
-	}
-
-	stringVal, ok := value.(string)
-	if ok {
-		fmt.Println("String: ", stringVal)
-	}
-
-}
-
-func outputData(data Outputable) error {
-	data.Display()
-	return saveData(data)
-}
-
-func saveData(data Saver) error {
-	err := data.Save()
-
-	if err != nil {
-		fmt.Println("Failed to sava Data")
-		return err
-	}
-
-	fmt.Println("Saving the note successed")
-	return nil
-}
-
-func getNoteData() (string, string) {
-	title := getUserInput("Note title: ")
-	description := getUserInput("Note Description: ")
-
-	return title, description
-
-}
-
-func getUserInput(prompt string) string {
-	fmt.Print(prompt)
-
-	reader := bufio.NewReader(os.Stdin)
-	text, err := reader.ReadString('\n')
-
-	if err != nil {
-		return ""
-	}
-
-	text = strings.Trim(text, "\n")
-	return text
+// This T is Generic type placeholder
+func add[T int | float64 | string](a, b T) T {
+	return a + b
 }
