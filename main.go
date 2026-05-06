@@ -3,31 +3,22 @@ package main
 import "fmt"
 
 func main() {
+	numbers := []int{1, 2, 3}
 
-	numbers := []int{1, 2, 3, 4}
-	doubled := transformNumbers(&numbers, double)
-	tripled := transformNumbers(&numbers, triple)
+	transformed := TransformedNumbers(&numbers, func(number int) int {
+		return number * 2
+	})
 
-	fmt.Println(numbers)
-	fmt.Println(doubled)
-	fmt.Println(tripled)
+	fmt.Println(transformed)
 
 }
 
-func transformNumbers(numbers *[]int, transform func(int) int) []int {
+func TransformedNumbers(numbers *[]int, transform func(int) int) []int {
+	dNumbers := []int{}
 
-	dNumber := []int{}
-	for _, number := range *numbers {
-		dNumber = append(dNumber, transform(number))
+	for _, val := range *numbers {
+		dNumbers = append(dNumbers, val*2)
 	}
 
-	return dNumber
-}
-
-func double(number int) int {
-	return number * 2
-}
-
-func triple(number int) int {
-	return number * 3
+	return dNumbers
 }
