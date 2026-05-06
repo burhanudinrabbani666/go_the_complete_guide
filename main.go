@@ -1,6 +1,11 @@
-# Working type aliases
+package main
 
-```go
+import (
+	"fmt"
+)
+
+type FloatMap map[string]float64
+
 func (floatMap FloatMap) output() {
 	fmt.Println(floatMap)
 }
@@ -13,8 +18,8 @@ func main() {
 	coursesRatings["React"] = 4.8
 	coursesRatings["Angular"] = 4.8
 
-	coursesRatings.output()
+	// Index becoming Key when in map strcture
+	for index, value := range coursesRatings {
+		fmt.Println(index, value)
+	}
 }
-```
-
-Next: [For loops arrays slices maps](./16-for-loops-arrays-slices-maps.md)
