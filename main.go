@@ -14,6 +14,11 @@ type Saver interface {
 	Save() error
 }
 
+type Outputable interface {
+	Saver
+	Display()
+}
+
 func main() {
 
 	title, description := getNoteData()
@@ -25,8 +30,7 @@ func main() {
 		return
 	}
 
-	userTodo.Display()
-	errTodoSave := saveData(userTodo)
+	errTodoSave := outputData(userTodo)
 	if errTodoSave != nil {
 		return
 	}
@@ -37,12 +41,16 @@ func main() {
 		return
 	}
 
-	userNote.Display()
-	errorSave := saveData(userNote)
+	errorSave := outputData(userNote)
 	if errorSave != nil {
 		return
 	}
 
+}
+
+func outputData(data Outputable) error {
+	data.Display()
+	return saveData(data)
 }
 
 func saveData(data Saver) error {
