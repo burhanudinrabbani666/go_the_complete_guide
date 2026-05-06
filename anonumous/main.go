@@ -1,6 +1,7 @@
-# Understanding Closures
+package main
 
-```go
+import "fmt"
+
 func main() {
 	numbers := []int{1, 2, 3}
 
@@ -35,6 +36,3 @@ func createTrasnformer(factor int) func(int) int {
 		return number * factor
 	}
 }
-```
-
-Next: [understanding recursion](./05-understanding-recursion.md)
