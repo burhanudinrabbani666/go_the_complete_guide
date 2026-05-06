@@ -1,6 +1,13 @@
-# working with arrays
+package main
 
-```go
+import "fmt"
+
+type Product struct {
+	id    string
+	Title string
+	Price float64
+}
+
 func main() {
 
 	productNames := [4]string{"A Book"}
@@ -14,6 +21,3 @@ func main() {
 	fmt.Println(productNames)
 
 }
-```
-
-Next: [Selecting slices](./03-selecting-slices.md)
